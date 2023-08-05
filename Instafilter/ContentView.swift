@@ -15,9 +15,18 @@ struct ContentView: View {
     }
     @State private var showingConfirmation = false
     @State private var backgroundColor = Color.white
+    @State private var image: Image?
     
     var body: some View {
         VStack {
+                    image?
+                        .resizable()
+                        .scaledToFit()
+                }
+                .onAppear(perform: loadImage)
+        /*
+        VStack {
+            
             Text("Blurred Text")
                 .blur(radius: blurAmount)
             
@@ -46,7 +55,11 @@ struct ContentView: View {
             print("New value is \(newValue)")
         }
         .padding()
+        */
     }
+    func loadImage() {
+            image = Image("Movies")
+        }
 }
 
 struct ContentView_Previews: PreviewProvider {
