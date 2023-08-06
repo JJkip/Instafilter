@@ -64,9 +64,16 @@ struct ContentView: View {
            let beginImage = CIImage(image: inputImage)
 //            image = Image("Movies")
         let context = CIContext()
-        let currentFilter = CIFilter.sepiaTone()
+//        let currentFilter = CIFilter.sepiaTone()
+//        let currentFilter = CIFilter.pixellate()
+//        let currentFilter = CIFilter.crystallize()
+        let currentFilter = CIFilter.twirlDistortion()
         currentFilter.inputImage = beginImage
-        currentFilter.intensity = 1
+//        currentFilter.intensity = 1
+//        currentFilter.scale = 100
+//        currentFilter.radius = 200
+        currentFilter.radius = 1000
+        currentFilter.center = CGPoint(x: inputImage.size.width / 2, y: inputImage.size.height / 2)
         
         // get a CIImage from our filter or exit if that fails
         guard let outputImage = currentFilter.outputImage else { return }
