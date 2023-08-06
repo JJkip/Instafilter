@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 struct ContentView: View {
     @State private var blurAmount = 0.0 {
@@ -58,7 +60,25 @@ struct ContentView: View {
         */
     }
     func loadImage() {
-            image = Image("Movies")
+        guard let inputImage = UIImage(named: "Movies") else { return }
+           let beginImage = CIImage(image: inputImage)
+//            image = Image("Movies")
+        let context = CIContext()
+        let currentFilter = CIFilter.sepiaTone()
+        currentFilter.inputImage = beginImage
+        currentFilter.intensity = 1
+        
+        // get a CIImage from our filter or exit if that fails
+        guard let outputImage = currentFilter.outputImage else { return }
+
+        // attempt to get a CGImage from our CIImage
+        if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
+            // convert that to a UIImage
+            let uiImage = UIImage(cgImage: cgimg)
+
+            // and convert that to a SwiftUI image
+            image = Image(uiImage: uiImage)
+        }
         }
 }
 
