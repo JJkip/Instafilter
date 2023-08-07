@@ -18,14 +18,28 @@ struct ContentView: View {
     @State private var showingConfirmation = false
     @State private var backgroundColor = Color.white
     @State private var image: Image?
+    @State private var showingImagePicker = false
     
     var body: some View {
+        VStack {
+            image?
+                .resizable()
+                .scaledToFit()
+            Button("Select Image"){
+                showingImagePicker = true
+            }
+        }
+        .sheet(isPresented: $showingImagePicker){
+            ImagePicker() 
+        }
+        /*
         VStack {
                     image?
                         .resizable()
                         .scaledToFit()
                 }
                 .onAppear(perform: loadImage)
+         */
         /*
         VStack {
             
