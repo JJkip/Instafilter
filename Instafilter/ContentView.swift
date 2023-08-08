@@ -19,6 +19,7 @@ struct ContentView: View {
     @State private var backgroundColor = Color.white
     @State private var image: Image?
     @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
     
     var body: some View {
         VStack {
@@ -30,8 +31,9 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showingImagePicker){
-            ImagePicker() 
+            ImagePicker(image: $inputImage)
         }
+        .onChange(of: inputImage) { _ in loadSelectedImage() }
         /*
         VStack {
                     image?
@@ -73,6 +75,12 @@ struct ContentView: View {
         .padding()
         */
     }
+    
+    func loadSelectedImage() {
+        guard let inputImage = inputImage else { return }
+        image = Image(uiImage: inputImage)
+    }
+    
     func loadImage() {
         guard let inputImage = UIImage(named: "Movies") else { return }
            let beginImage = CIImage(image: inputImage)

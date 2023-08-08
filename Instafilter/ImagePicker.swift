@@ -15,7 +15,7 @@ struct ImagePicker: UIViewControllerRepresentable {
         
         var parent: ImagePicker
         
-        init(parent: ImagePicker) {
+        init(_ parent: ImagePicker) {
             self.parent = parent
         }
         
