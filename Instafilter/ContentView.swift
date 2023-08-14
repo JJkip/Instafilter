@@ -23,6 +23,7 @@ struct ContentView: View {
     @State private var filterIntensity = 0.5
     @State private var currentFilter: CIFilter = CIFilter.sepiaTone()
     @State private var showingFilterSheet = false
+    @State private var processedImage: UIImage?
     
     let context = CIContext()
     
@@ -106,6 +107,7 @@ struct ContentView: View {
         if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
             let uiImage = UIImage(cgImage: cgimg)
             image = Image(uiImage: uiImage)
+            processedImage = uiImage
         }
     }
     
@@ -114,7 +116,17 @@ struct ContentView: View {
         loadimage()
     }
     func save(){
+        guard let processedImage = processedImage else { return }
         
+        let imageSaver = ImageSaver()
+        
+        imageSaver.successHandler = {
+            print("Success!")
+        }
+        imageSaver.errorHandler = {
+            print("Ooops: \($0.localizedDescription)")
+        }
+        imageSaver.writeToPhotoAlbum(image: processedImage)
     }
     /*
      VStack {
